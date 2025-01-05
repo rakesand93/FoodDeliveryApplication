@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { Link } from 'react-router';
 import { withPopularLabel } from './RestaurantCard';
+import UserContext from '../utils/UserContext';
 
 const Body = ({resList,handleClick,search,setSearch,handleSearch}) => {
 
   const RestaurantCardPopular = withPopularLabel(RestaurantCard);
+  
 
   return resList.length === 0 ? (
     <Shimmer />
@@ -38,6 +40,8 @@ const Body = ({resList,handleClick,search,setSearch,handleSearch}) => {
           >
             Top Rated Restaurants
           </button>
+
+          
         </div>
       </div>
       <div className="flex flex-wrap">

@@ -2,13 +2,12 @@ import { IoIosArrowDown,IoIosArrowUp } from "react-icons/io";
 import ItemList from "./ItemList";
 import { useState } from "react";
 
-const RestaurantCategory = ({ data }) => {
+const RestaurantCategory = ({ data,showItems,index,setShowIndex }) => {
 
-  const[showItems,setShowItems] = useState(false);
+  
 
   const handleDropDown = () => {
-
-    setShowItems(showItems ? false : true);
+    showItems ? setShowIndex(null) : setShowIndex(index);
 
   };
   return (

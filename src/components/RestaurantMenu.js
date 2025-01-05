@@ -8,6 +8,10 @@ import RestaurantCategory from './RestaurantCategory';
 
 
 const RestaurantMenu = () => {
+
+  //Controlled state variables. RestaurantMenu is controlling the RestaurantCategory.
+  const[showIndex, setShowIndex] = useState(null);
+
   const {resId} = useParams();
 
   const resInfo = useRestaurantMenu(resId);
@@ -30,8 +34,8 @@ const RestaurantMenu = () => {
       <p className='font-bold text-lg'>
         {cuisines.join(", ")} - {costForTwoMessage}
       </p>
-      {/* {Catgeories Accordion} */}
-      {categories.map((category) => <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card}/>)}
+      {/* This is a Controlled Component from Chapter - 10 */}
+      {categories.map((category,index) => <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card} showItems = {index === showIndex ? true : false} index={index} setShowIndex={setShowIndex} />)}
     </div>
   );
 }

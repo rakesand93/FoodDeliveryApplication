@@ -9,19 +9,16 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import useOnlineStatus from "./utils/useOnlineStatus";
-
-
+import UserContext from "./utils/UserContext";
 
 const Grocery = lazy(() => import("./components/Grocery"));
-
 
 const App = () => {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [login, setLogin] = useState("Login");
   const [search, setSearch] = useState("");
-
-  
+  const [userName, setUserName] = useState();
 
   useEffect(() => {
     const apiRequest = async () => {
@@ -45,6 +42,15 @@ const App = () => {
     apiRequest();
   }, []);
 
+  //For Context API
+  useEffect(() => {
+    const data = {
+      name: "Rakesh G",
+    };
+
+    setUserName(data.name);
+  }, []);
+
   const handleClick = (e) => {
     console.log("Handle Click fn is called!");
     const lists = items.filter((item) =>
@@ -63,22 +69,24 @@ const App = () => {
     setFilteredItems(searchLists);
   };
 
-
   const onlineStatus = useOnlineStatus();
 
-  if(onlineStatus === false) return <h1>Looks like you're Offline! Connect to your Internet!</h1>
+  if (onlineStatus === false)
+    return <h1>Looks like you're Offline! Connect to your Internet!</h1>;
 
   return (
-    <div className="app">
-      <Header login={login} setLogin={setLogin} />
-      <Body
-        resList={filteredItems}
-        handleClick={handleClick}
-        search={search}
-        setSearch={setSearch}
-        handleSearch={handleSearch}
-      />
-    </div>
+    <UserContext.Provider value={{userName}}>
+      <div className="app">
+        <Header login={login} setLogin={setLogin} />
+        <Body
+          resList={filteredItems}
+          handleClick={handleClick}
+          search={search}
+          setSearch={setSearch}
+          handleSearch={handleSearch}
+        />
+      </div>
+    </UserContext.Provider>
   );
 };
 
